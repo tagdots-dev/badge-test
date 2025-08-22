@@ -1,2 +1,1 @@
 # badge-test
-repo test
