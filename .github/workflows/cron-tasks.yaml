@@ -175,7 +175,7 @@ jobs:
 
   notify-slack: # https://github.com/slackapi/slack-github-action
     if: always()
-    needs: [badge-demo, stale-workflow-runs, stale-issues-prs, stale-branches, update-pre-commit]
+    needs: [badge-coverage, stale-workflow-runs, stale-issues-prs, stale-branches, update-pre-commit]
 
     runs-on: ubuntu-latest
 
@@ -188,7 +188,7 @@ jobs:
       shell: bash
       run: |
         # get overall result from all of the previous jobs
-        if "${{ needs.badge-demo.result == 'success' && needs.stale-workflow-runs.result == 'success' && needs.stale-issues-prs.result == 'success' && needs.stale-branches.result == 'success' && needs.update-pre-commit.result == 'success' }}"; then
+        if "${{ needs.badge-coverage.result == 'success' && needs.stale-workflow-runs.result == 'success' && needs.stale-issues-prs.result == 'success' && needs.stale-branches.result == 'success' && needs.update-pre-commit.result == 'success' }}"; then
           echo "WORKFLOW_RESULT=:white_check_mark:" >> "$GITHUB_OUTPUT"
         else
           echo "WORKFLOW_RESULT=:no_entry:" >> "$GITHUB_OUTPUT"
@@ -206,7 +206,7 @@ jobs:
               *Workflow : ${{ github.workflow }} ${{ steps.get-overall-jobs-results.outputs.WORKFLOW_RESULT }}*
               ```
               URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n
-              Job: badge-demo          - ${{ needs.badge-demo.result }}\n
+              Job: badge-coverage      - ${{ needs.badge-coverage.result }}\n
               Job: stale-workflow-runs - ${{ needs.stale-workflow-runs.result }}\n
               Job: stale-issues-prs    - ${{ needs.stale-issues-prs.result }}\n
               Job: stale-branches      - ${{ needs.stale-branches.result }}\n
