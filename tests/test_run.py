@@ -54,7 +54,7 @@ def test_checkout_branch_return_detached_branch_object(get_repo):
     print(f'\nCheckout branch result: {result}')
 
     assert result is not None
-    assert isinstance(result, git.HEAD)
+    assert isinstance(result, git.Head)
 
 
 def test_checkout_branch_return_branch_object(get_repo):
