@@ -24,7 +24,7 @@ def get_repo():
     return git.Repo(os.getcwd())
 
 
-def checkout_branch(repo, remote_name, badge_branch, gitconfig_name, gitconfig_email):
+def checkout_branch(repo: git.Repo, remote_name: str, badge_branch: str, gitconfig_name: str, gitconfig_email: str):
     """
     Checkout a git branch
 
@@ -54,33 +54,27 @@ def checkout_branch(repo, remote_name, badge_branch, gitconfig_name, gitconfig_e
 
         if repo.head.is_detached:
             # scenario: on pull request (pull/XX/merge), head is in detached state
-            local_branch = repo.create_head(badge_branch, repo.head.commit)
+            local_branch = repo.create_head(badge_branch, str(repo.head.commit))
             origin.push(local_branch.name, set_upstream=True)
-
         else:
             if any(ref.name == f'{remote_name}/{badge_branch}' for ref in origin.refs):
                 if badge_branch not in repo.heads:
                     # scenario: badge branch exists in remote but not in local
                     local_branch = repo.create_head(badge_branch, f'{remote_name}/{badge_branch}')
                     origin.push(local_branch.name, set_upstream=True)
-
                 else:
                     if repo.is_dirty(untracked_files=True):
                         # scenario: badge branch exists in both local and remote (with local changes)
                         raise Exception('Stage and commit your local changes and try again')
-
                     remote = repo.remotes.origin
                     remote.pull()
                     local_branch = repo.heads[badge_branch]
-
             else:
                 if repo.active_branch.name == badge_branch:
                     # scenario: badge branch (active branch) exists in local but not in remote
                     local_branch = repo.heads[badge_branch]
-
                 else:
                     local_branch = repo.create_head(badge_branch, repo.active_branch.name)
-
                 origin.push(local_branch.name, set_upstream=True)
 
         return local_branch.checkout()
@@ -90,7 +84,8 @@ def checkout_branch(repo, remote_name, badge_branch, gitconfig_name, gitconfig_e
         return None
 
 
-def check_user_inputs(available_badge_styles, badge_style, badge_url, label_color, message_color):
+def check_user_inputs(available_badge_styles: list, badge_style: str, badge_url: str,
+                      label_color: str, message_color: str) -> bool:
     """
     Check user inputs
 
@@ -114,7 +109,7 @@ def check_user_inputs(available_badge_styles, badge_style, badge_url, label_colo
         return False
 
 
-def check_hex_color(hex_color):
+def check_hex_color(hex_color: str) -> bool:
     """
     Check if the hex color variable is valid
 
@@ -133,7 +128,7 @@ def check_hex_color(hex_color):
         return False
 
 
-def create_badge_dict(badge_style, label, label_color, message, message_color):
+def create_badge_dict(badge_style: str, label: str, label_color: str, message: str, message_color: str) -> dict:
     """
     Create python dictionary for json file
 
@@ -151,7 +146,7 @@ def create_badge_dict(badge_style, label, label_color, message, message_color):
     return badge_dict
 
 
-def create_badge_json(badge_dict, badge_name):
+def create_badge_json(badge_dict: dict, badge_name: str) -> bool:
     """
     Create badge json files from python dictionary
 
@@ -176,7 +171,7 @@ def create_badge_json(badge_dict, badge_name):
         return False
 
 
-def check_badge_changes(repo, badge_name):
+def check_badge_changes(repo: git.Repo, badge_name: str) -> bool:
     """
     Check any badge changes
 
@@ -195,7 +190,7 @@ def check_badge_changes(repo, badge_name):
         return False
 
 
-def push_changes(repo, remote_name, badge_branch, badge_name, msg_suffix):
+def push_changes(repo: git.Repo, remote_name: str, badge_branch: str, badge_name: str, msg_suffix: str) -> str | None:
     """
     Stage and write commits, and push to remote
 
@@ -223,7 +218,7 @@ def push_changes(repo, remote_name, badge_branch, badge_name, msg_suffix):
         return None
 
 
-def create_shieldsio_endpoint_badge(repo, badge_branch, badge_name, badge_url):
+def create_shieldsio_endpoint_badge(repo: git.Repo, badge_branch: str, badge_name: str, badge_url: str) -> str:
     """
     Create Shields.io Endpoint Badge
 
@@ -248,7 +243,7 @@ def create_shieldsio_endpoint_badge(repo, badge_branch, badge_name, badge_url):
     return eb
 
 
-def cicleanup(repo, remote_name, badge_branch):
+def cicleanup(repo: git.Repo, remote_name: str, badge_branch: str) -> bool:
     """
     Cleanup - delete the remote badge branch if triggered by 'coverage run'
 
