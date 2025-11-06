@@ -53,7 +53,7 @@ def test_checkout_branch_return_detached_branch_object(get_repo):
     print(f'\nCheckout branch result: {result}')
 
     assert result is not None
-    assert isinstance(result, git.Reference)
+    assert isinstance(result, git.Head)
 
 
 def test_checkout_branch_return_branch_object(get_repo):
@@ -71,7 +71,7 @@ def test_checkout_branch_return_branch_object(get_repo):
     print(f'\nCheckout branch result: {result}')
 
     assert result is not None
-    assert isinstance(result, git.Reference)
+    assert isinstance(result, git.Head)
 
 
 def test_checkout_branch_return_exception(get_repo):
@@ -95,7 +95,7 @@ def test_checkout_branch_return_exception(get_repo):
     os.remove(file_path)
 
     assert result is None
-    assert not isinstance(result, git.Reference)
+    assert not isinstance(result, git.Head)
 
 
 def test_checkout_branch_return_none_01(get_repo):
