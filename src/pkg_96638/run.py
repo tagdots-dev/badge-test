@@ -34,8 +34,6 @@ def checkout_branch(repo: git.Repo, remote_name: str, badge_branch: str, gitconf
     badge_branch   : badge branch name (e.g. badges)
     gitconfig_name : git config user name
     gitconfig_email: git config user email
-
-    Return: branch object '<class 'git.refs.head.Head'>' or None
     """
     try:
         # Specify git config user info and how to reconcile divergent branches on pull
@@ -95,8 +93,6 @@ def check_user_inputs(available_badge_styles: list, badge_style: str, badge_url:
     badge_url             : badge clickable url
     label_color           : badge background hex color (left side)
     message_color         : badge background hex color (right side)
-
-    Return: boolean
     """
     if all([
             check_hex_color(label_color),
@@ -115,8 +111,6 @@ def check_hex_color(hex_color: str) -> bool:
 
     Parameter(s):
     hex_color: hex color for label-color or message-color
-
-    Return: boolean
     """
     hex_color = hex_color.lstrip('#')
     if len(hex_color) not in [3, 6]:
@@ -138,8 +132,6 @@ def create_badge_dict(badge_style: str, label: str, label_color: str, message: s
     label_color  : badge background hex color (left side)
     message      : badge text (right side)
     message_color: badge background hex color (right side)
-
-    Return: python dictionary
     """
     badge_dict = {'schemaVersion': 1, 'style': badge_style, 'label': label, 'labelColor': label_color,
                   'message': message, 'color': message_color}
@@ -153,8 +145,6 @@ def create_badge_json(badge_dict: dict, badge_name: str) -> bool:
     Parameter(s):
     badge_dict: a python dictionary in shields.io endpoint badge schema
     badge_name: badge filename (e.g. badge)
-
-    Return: boolean
     """
     badge_file_dst = f'badges/{badge_name}.json'
 
@@ -178,8 +168,6 @@ def check_badge_changes(repo: git.Repo, badge_name: str) -> bool:
     Parameter(s):
     repo      : repo class object 'git.repo.base.Repo'
     badge_name: badge filename (e.g. badge)
-
-    Return: boolean
     """
     if any([
             f'badges/{badge_name}.json' in repo.untracked_files,
@@ -200,8 +188,6 @@ def push_changes(repo: git.Repo, remote_name: str, badge_branch: str, badge_name
     badge_branch: badge branch name (e.g. badges)
     badge_name  : badge filename (e.g. badge)
     msg_suffix  : suffix to append to commit message
-
-    Return: commit hash or None
     """
     try:
         repo.index.add([f'badges/{badge_name}.json'])
@@ -227,8 +213,6 @@ def create_shieldsio_endpoint_badge(repo: git.Repo, badge_branch: str, badge_nam
     badge_name  : badge filename (e.g. badge)
     badge_branch: badge branch name (e.g. badges)
     badge_url   : badge clickable url
-
-    Return: Shields.io endpoint badge
     """
     shields_io = 'https://img.shields.io/endpoint'
     raw_github = 'https://raw.githubusercontent.com'
