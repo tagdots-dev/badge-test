@@ -10,7 +10,7 @@ from pathlib import Path
 
 import click
 import git
-import validators
+from pkg_19544 import evaluate_url
 
 from pkg_96638 import __version__
 
@@ -98,7 +98,7 @@ def check_user_inputs(available_badge_styles: list, badge_style: str, badge_url:
             check_hex_color(label_color),
             check_hex_color(message_color),
             badge_style in available_badge_styles,
-            True if not badge_url else validators.url(badge_url)
+            True if not badge_url else evaluate_url(badge_url)
             ]):
         return True
     else:
