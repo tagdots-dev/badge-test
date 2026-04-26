@@ -20,8 +20,8 @@ classifiers = [
   "Topic :: Software Development :: Build Tools",
 ]
 dependencies = [
-  "click==8.3.2",
-  "gitpython==3.1.46",
+  "click==8.3.3",
+  "gitpython==3.1.47",
   "pkg-19544==1.3.7",
 ]
 optional-dependencies.local = [
