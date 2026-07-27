@@ -21,7 +21,7 @@ classifiers = [
 ]
 dependencies = [
   "click==8.4.2",
-  "gitpython==3.1.51",
+  "gitpython==3.1.54",
   "pkg-19544==1.4.1",
 ]
 optional-dependencies.local = [
