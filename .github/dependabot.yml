@@ -4,16 +4,12 @@ multi-ecosystem-groups:
   global-updates:
     schedule:
       interval: "cron"
-      cronjob: "15 1 * * 0"  # All ecosystems now run at 1:15 AM
-    ecosystems:
-      - "github-actions"
-      - "pip"
-      - "uv"
-      - "terraform"
+      cronjob: "15 1 * * 0"
 
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
+    multi-ecosystem-group: "global-updates"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     allow:
@@ -30,6 +26,7 @@ updates:
 
   - package-ecosystem: "pip"
     directory: "/"
+    multi-ecosystem-group: "global-updates"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     versioning-strategy: "increase"
@@ -47,6 +44,7 @@ updates:
 
   - package-ecosystem: "uv"
     directory: "/"
+    multi-ecosystem-group: "global-updates"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     versioning-strategy: "increase"
