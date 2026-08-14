@@ -1,10 +1,19 @@
 version: 2
-updates:
-  - package-ecosystem: github-actions
-    directory: /
+
+multi-ecosystem-groups:
+  global-updates:
     schedule:
       interval: "cron"
-      cronjob: "15 0 * * 0"
+      cronjob: "15 1 * * 0"  # All ecosystems now run at 1:15 AM
+    ecosystems:
+      - "github-actions"
+      - "pip"
+      - "uv"
+      - "terraform"
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     allow:
@@ -19,34 +28,28 @@ updates:
     cooldown:
       default-days: 3
 
-  - package-ecosystem: pip
-    directory: /
-    schedule:
-      interval: "cron"
-      cronjob: "15 1 * * 0"
+  - package-ecosystem: "pip"
+    directory: "/"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
-    versioning-strategy: increase
+    versioning-strategy: "increase"
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
     commit-message:
       prefix: "[PIP] "
     groups:
-      uv-all:
+      pip-all:
         patterns:
           - "*"
     cooldown:
       default-days: 3
 
-  - package-ecosystem: uv
-    directory: /
-    schedule:
-      interval: "cron"
-      cronjob: "15 1 * * 0"
+  - package-ecosystem: "uv"
+    directory: "/"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
-    versioning-strategy: increase
+    versioning-strategy: "increase"
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
@@ -59,22 +62,3 @@ updates:
     cooldown:
       default-days: 3
 
-  - package-ecosystem: terraform
-    directories:
-      - /
-      - /modules
-      - /workspace
-    schedule:
-      interval: "cron"
-      cronjob: "15 1 * * 0"
-    open-pull-requests-limit: 1
-    rebase-strategy: "disabled"
-    allow:
-      - dependency-type: "direct"
-      - dependency-type: "indirect"
-    commit-message:
-      prefix: "[TERRAFORM] "
-    groups:
-      terraform:
-        patterns:
-          - "*"
