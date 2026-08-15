@@ -7,11 +7,11 @@ multi-ecosystem-groups:
       cronjob: "15 1 * * 0"
     commit-message:
       prefix: "[DEPS] "
+    open-pull-requests-limit: 1
 
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
-    open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     allow:
       - dependency-type: "direct"
@@ -24,7 +24,6 @@ updates:
   - package-ecosystem: "uv"
     directory: "/"
     multi-ecosystem-group: "project-updates"
-    open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     versioning-strategy: increase
     allow:
@@ -37,7 +36,6 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     multi-ecosystem-group: "project-updates"
-    open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     versioning-strategy: increase
     allow:
