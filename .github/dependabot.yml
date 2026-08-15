@@ -5,6 +5,8 @@ multi-ecosystem-groups:
     schedule:
       interval: "cron"
       cronjob: "15 1 * * 0"
+    commit-message:
+      prefix: "[DEPS] "
 
 updates:
   - package-ecosystem: "github-actions"
@@ -17,8 +19,6 @@ updates:
     multi-ecosystem-group: "project-updates"
     patterns:
       - "*"
-    commit-message:
-      prefix: "[GITHUB-ACTIONS] "
     cooldown:
       default-days: 3
   - package-ecosystem: "uv"
@@ -30,8 +30,6 @@ updates:
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    commit-message:
-      prefix: "[UV] "
     patterns:
       - "*"
     cooldown:
@@ -45,8 +43,6 @@ updates:
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    commit-message:
-      prefix: "[PIP] "
     patterns:
       - "*"
     cooldown:
