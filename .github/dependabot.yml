@@ -1,47 +1,59 @@
 version: 2
 
-multi-ecosystem-groups:
-  project-updates:
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: "cron"
+      cronjob: "15 0 * * 0"
+    open-pull-requests-limit: 1
+    rebase-strategy: "disabled"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "[GITHUB-ACTIONS] "
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    cooldown:
+      default-days: 3
+  - package-ecosystem: uv
+    directory: /
     schedule:
       interval: "cron"
       cronjob: "15 1 * * 0"
-    commit-message:
-      prefix: "[DEPS] "
     open-pull-requests-limit: 1
-
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    rebase-strategy: "disabled"
-    allow:
-      - dependency-type: "direct"
-      - dependency-type: "indirect"
-    multi-ecosystem-group: "project-updates"
-    patterns:
-      - "*"
-    cooldown:
-      default-days: 3
-  - package-ecosystem: "uv"
-    directory: "/"
-    multi-ecosystem-group: "project-updates"
     rebase-strategy: "disabled"
     versioning-strategy: increase
+    groups:
+      pip:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "[UV] "
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    patterns:
-      - "*"
     cooldown:
       default-days: 3
-  - package-ecosystem: "pip"
-    directory: "/"
-    multi-ecosystem-group: "project-updates"
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: "cron"
+      cronjob: "15 1 * * 0"
+    open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     versioning-strategy: increase
+    groups:
+      uv:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "[PIP] "
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    patterns:
-      - "*"
     cooldown:
       default-days: 3
