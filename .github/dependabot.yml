@@ -1,61 +1,55 @@
 version: 2
 
 multi-ecosystem-groups:
-  global-updates:
+  project-updates:
     schedule:
       interval: "cron"
       cronjob: "15 1 * * 0"
+    commit-message:
+      prefix: "[DEPS] "
 
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
-    multi-ecosystem-group: "global-updates"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
+    multi-ecosystem-group: "project-updates"
+    patterns:
+      - "*"
     commit-message:
       prefix: "[GITHUB-ACTIONS] "
-    groups:
-      github-actions:
-        patterns:
-          - "*"
     cooldown:
       default-days: 3
-
-  - package-ecosystem: "pip"
-    directory: "/"
-    multi-ecosystem-group: "global-updates"
-    open-pull-requests-limit: 1
-    rebase-strategy: "disabled"
-    versioning-strategy: "increase"
-    allow:
-      - dependency-type: "direct"
-      - dependency-type: "indirect"
-    commit-message:
-      prefix: "[PIP] "
-    groups:
-      pip-all:
-        patterns:
-          - "*"
-    cooldown:
-      default-days: 3
-
   - package-ecosystem: "uv"
     directory: "/"
-    multi-ecosystem-group: "global-updates"
+    multi-ecosystem-group: "project-updates"
     open-pull-requests-limit: 1
     rebase-strategy: "disabled"
-    versioning-strategy: "increase"
+    versioning-strategy: increase
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
     commit-message:
       prefix: "[UV] "
-    groups:
-      uv-all:
-        patterns:
-          - "*"
+    patterns:
+      - "*"
+    cooldown:
+      default-days: 3
+  - package-ecosystem: "pip"
+    directory: "/"
+    multi-ecosystem-group: "project-updates"
+    open-pull-requests-limit: 1
+    rebase-strategy: "disabled"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    commit-message:
+      prefix: "[PIP] "
+    patterns:
+      - "*"
     cooldown:
       default-days: 3
