@@ -32,7 +32,7 @@ def get_repo():
     yield repo
     # Restore state after test - switch to main and clean up
     try:
-        repo.git.checkout("main", "--force")
+        repo.git.checkout("fix/restore_repo_state", "--force")
         repo.git.reset("--hard", "HEAD")
         repo.git.clean("-fd")
     except Exception:
