@@ -28,7 +28,15 @@ def get_repo():
     Get repo class object 'git.repo.base.Repo'
     Return: repo object
     """
-    return git.Repo(os.getcwd())
+    repo = git.Repo(os.getcwd())
+    yield repo
+    # Restore state after test - switch to main and clean up
+    try:
+        repo.git.checkout("main", "--force")
+        repo.git.reset("--hard", "HEAD")
+        repo.git.clean("-fd")
+    except Exception:
+        pass
 
 
 def test_get_repo(get_repo):
