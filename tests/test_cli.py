@@ -404,19 +404,24 @@ def test_cicleanup_failure(get_repo):
     assert result is False
 
 
-# def test_main_return_success_default():
-#     """
-#     Test main
+def test_main_return_success_default(get_repo):
+    """
+    Test main
 
-#     Expect Result: Return Endpoint Badge for README
-#     """
-#     runner = CliRunner()
-#     result = runner.invoke(main, ["--badge-branch", "ci-testing", "--badge-name", "ci-testing"])
-#     print(f"\nMain result: {result}")
-#     print(result.stdout)
-#     print(result.stderr)
+    Expect Result: Return Endpoint Badge for README
+    """
+    runner = CliRunner()
+    result = runner.invoke(main, ["--badge-branch", "ci-testing", "--badge-name", "ci-testing"])
+    print(f"\nMain result: {result}")
+    print(result.stdout)
+    print(result.stderr)
 
-#     assert result is not None
+    assert result is not None
+
+    remote_name = "origin-invalid"
+    badge_branch = "ci-testing"
+    restore_result = cicleanup(get_repo, remote_name, badge_branch)
+    print(f"\nCleanup result: {restore_result}")
 
 
 # def test_main_return_success_no_changes():
