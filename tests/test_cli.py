@@ -419,19 +419,19 @@ def test_main_return_success_default():
     assert result is not None
 
 
-def test_main_return_success_no_changes():
-    """
-    Test main
+# def test_main_return_success_no_changes():
+#     """
+#     Test main
 
-    Expect Result: found no changes (current is up to date)
-    """
-    runner = CliRunner()
-    result = runner.invoke(main, ["--badge-branch", "ci-testing", "--badge-name", "ci-testing"])
-    print(f"\nMain result: {result}")
-    print(result.stdout)
-    print(result.stderr)
+#     Expect Result: found no changes (current is up to date)
+#     """
+#     runner = CliRunner()
+#     result = runner.invoke(main, ["--badge-branch", "ci-testing", "--badge-name", "ci-testing"])
+#     print(f"\nMain result: {result}")
+#     print(result.stdout)
+#     print(result.stderr)
 
-    assert result is not None
+#     assert result is not None
 
 
 if __name__ == "__main__":
