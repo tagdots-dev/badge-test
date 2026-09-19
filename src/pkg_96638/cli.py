@@ -401,7 +401,13 @@ def create_shieldsio_endpoint_badge(repo: git.Repo, badge_branch: str, badge_nam
     shields_io = "https://img.shields.io/endpoint"
     raw_github = "https://raw.githubusercontent.com"
     repo_remotes_url = repo.remotes.origin.url
-    owner_repo = "/".join(repo_remotes_url.rsplit("/", 2)[-2:]).replace(".git", "").replace("git@github.com:", "")
+    owner_repo = (
+        "/".join(repo_remotes_url.rsplit("/", 2)[-2:])
+        .replace(".git", "")
+        .replace("git@github.com:", "")
+        .replace("https://github.com/", "")
+    )
+
     json_endpoint = f"{raw_github}/{owner_repo}/refs/heads/{badge_branch}/badges/{badge_name}.json"
     if badge_url:
         eb = f"[![{badge_name}]({shields_io}?url={json_endpoint})]({badge_url})"
