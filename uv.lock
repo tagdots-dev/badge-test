@@ -3,6 +3,15 @@ revision = 3
 requires-python = ">=3.12.10"
 
 [[package]]
+name = "apilgtm"
+version = "1.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6f/a4/9b791dfa77d2c99ae5f8da370f73d3b03af9694fd653df616faea5e2eeb9/apilgtm-1.0.1.tar.gz", hash = "sha256:67034363e812c6be4df3d1d245827b8e4067b7459305f38abd4fff850833ae88", size = 85825, upload-time = "2026-08-14T03:42:44.669Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/78/72/6670d0b8d8dbf383b1c0dce7fc82c0acd0943f4e612205ef38e150c4a655/apilgtm-1.0.1-py3-none-any.whl", hash = "sha256:0b48b675c243d065c31baad6a08bf08b4aec7328af003c4a42545109fafcc960", size = 16051, upload-time = "2026-08-14T03:42:43.741Z" },
+]
+
+[[package]]
 name = "argcomplete"
 version = "3.7.2"
 source = { registry = "https://pypi.org/simple" }
@@ -502,22 +511,13 @@ wheels = [
 ]
 
 [[package]]
-name = "pkg-19544"
-version = "1.5.5"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7d/3e/7d1f9266c45723936713175fb0f12afc2e4c7597940090e6af19895dd60c/pkg_19544-1.5.5.tar.gz", hash = "sha256:c221196035932b31519e04584a4621a2102d59689c74e2c0c5375bd1e70d30cf", size = 115220, upload-time = "2026-08-13T15:42:44.101Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c3/12/5685c85950352b9e0b933fcee004a3899d018c0d9cdeaeb367007a6f30ac/pkg_19544-1.5.5-py3-none-any.whl", hash = "sha256:6788cd05f498bfbdeb73f87b7ceccc81f7b2190591c7ea1da68ee3c2d2e8d170", size = 16732, upload-time = "2026-08-13T15:42:43.056Z" },
-]
-
-[[package]]
 name = "pkg-96638"
 version = "1.1.1"
 source = { editable = "." }
 dependencies = [
+    { name = "apilgtm" },
     { name = "click" },
     { name = "gitpython" },
-    { name = "pkg-19544" },
 ]
 
 [package.dev-dependencies]
@@ -536,9 +536,9 @@ test = [
 
 [package.metadata]
 requires-dist = [
+    { name = "apilgtm", specifier = ">=1.0.1" },
     { name = "click", specifier = ">=8.4.2" },
     { name = "gitpython", specifier = ">=3.1.62" },
-    { name = "pkg-19544", specifier = ">=1.5.3" },
 ]
 
 [package.metadata.requires-dev]
