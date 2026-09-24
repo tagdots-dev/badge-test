@@ -21,9 +21,9 @@ classifiers = [
   "Topic :: Software Development :: Build Tools",
 ]
 dependencies = [
+  "apilgtm>=1.0.1",
   "click>=8.4.2",
   "gitpython>=3.1.62",
-  "pkg-19544>=1.5.3",
 ]
 urls.Changelog = "https://github.com/tagdots-dev/pkg-96638/blob/main/CHANGELOG.md"
 urls.Documentation = "https://github.com/tagdots-dev/pkg-96638/blob/main/README.md"

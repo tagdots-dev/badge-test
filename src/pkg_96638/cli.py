@@ -13,15 +13,16 @@ The CLI command creates badges by:
 6. Restore the original branch
 """
 
+import configparser
 import json
 import os
 import sys
 from pathlib import Path
 from typing import Any, cast
 
+import apilgtm
 import click
 import git
-import pkg_19544
 
 from pkg_96638 import __version__
 
@@ -76,14 +77,24 @@ def checkout_branch(
     # Step 1: Ensure git config exists (user.name/user.email), which is
     # essential for CI environments where these values might be missing.
     try:
-        reader = repo.config_reader()
-        config_name = reader.get_value("user", "name", default=None)
-        config_email = reader.get_value("user", "email", default=None)
+        # Check if git config has user.name and user.email
+        config_name = None
+        config_email = None
 
-        if config_name is None or config_email is None:
-            # Git config is missing (typical in CI), set defaults
-            with repo.config_writer() as writer:
+        # Try to read existing config
+        try:
+            reader = repo.config_reader()
+            config_name = reader.get_value("user", "name", default=None)
+            config_email = reader.get_value("user", "email", default=None)
+        except (configparser.NoSectionError, Exception):
+            # No config file exists or section is missing - will create with defaults
+            pass
+
+        # Set defaults if missing
+        with repo.config_writer() as writer:
+            if config_name is None:
                 writer.set_value("user", "name", gitconfig_name)
+            if config_email is None:
                 writer.set_value("user", "email", gitconfig_email)
     except Exception as e:
         raise Exception(f"Failed to set git configuration: {e}")
@@ -113,7 +124,6 @@ def checkout_branch(
 
     # Step 5: Handle the scenarios
     if is_commit_hash:
-        print("temp 1")
         """Scenario A: Branch name is a commit hash (e.g. GitHub PR
         checkout puts HEAD in detached state).
 
@@ -125,7 +135,6 @@ def checkout_branch(
         return cast(git.Head, local_branch.checkout())
 
     elif not local_exists and not remote_exists:
-        print("temp 2")
         """Scenario B: Branch doesn't exist anywhere
 
         - create a new local branch
@@ -137,7 +146,6 @@ def checkout_branch(
         return cast(git.Head, local_branch.checkout())
 
     elif not local_exists and remote_exists:
-        print("temp 3")
         """Scenario C: Branch exists on remote but not local
 
         - create a new local branch from the remote branch
@@ -148,7 +156,6 @@ def checkout_branch(
         return cast(git.Head, local_branch.checkout())
 
     elif local_exists and remote_exists:
-        print("temp 4")
         """Scenario D: Branch exists on both local and remote
 
         - check out the current local branch
@@ -161,7 +168,6 @@ def checkout_branch(
         return cast(git.Head, local_branch.checkout())
 
     elif local_exists and not remote_exists:
-        print("temp 5")
         """Scenario E: Branch exists on local but not remote
         We ran remote.fetch(prune=True) in step 2.  When remote branch no longer
         exists, reference to RemoteReference object is removed.  The .git/config
@@ -205,7 +211,7 @@ def check_user_inputs(
             check_hex_color(label_color),
             check_hex_color(message_color),
             badge_style in available_badge_styles,
-            True if not badge_url else pkg_19544.evaluate_url(badge_url),
+            True if not badge_url else apilgtm.evaluate_url(badge_url),
         ]
     ):
         return True
